@@ -14,7 +14,7 @@ final colorKeyProvider = StateProvider<String>((ref) {
 });
 
 final colorProvider = Provider<MaterialColor>((ref) {
-  final colorKey = ref.watch(colorKeyProvider).state;
+  final colorKey = ref.watch(colorKeyProvider.state).state;
   return _allAvailableColors[colorKey]!;
 });
 
@@ -34,7 +34,7 @@ class ThemeSelectionPage extends StatelessWidget {
               return ThemeListTile(
                 color: _allAvailableColors[colorName]!,
                 colorName: colorName,
-                onSelected: () => ref.read(colorKeyProvider).state = colorName,
+                onSelected: () => ref.read(colorKeyProvider.state).state = colorName,
               );
             });
           },

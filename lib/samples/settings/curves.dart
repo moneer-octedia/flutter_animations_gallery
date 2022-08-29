@@ -54,7 +54,7 @@ final curveKeyProvider = StateProvider<String>((ref) {
 });
 
 final curveProvider = Provider<Curve>((ref) {
-  final curveKey = ref.watch(curveKeyProvider).state;
+  final curveKey = ref.watch(curveKeyProvider.state).state;
   return _allCurves[curveKey]!;
 });
 
@@ -82,7 +82,7 @@ class _CurvesPageState extends AnimationControllerState<CurvesPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, _) {
-      final animateAllCurves = ref.watch(animateAllCurvesProvider).state;
+      final animateAllCurves = ref.watch(animateAllCurvesProvider.state).state;
       return PageScaffold(
         title: 'Curves',
         actions: [
@@ -93,7 +93,7 @@ class _CurvesPageState extends AnimationControllerState<CurvesPage> {
               child: Icon(animateAllCurves ? Icons.bar_chart : Icons.repeat),
             ),
             onPressed: () =>
-                ref.read(animateAllCurvesProvider).state = !animateAllCurves,
+                ref.read(animateAllCurvesProvider.state).state = !animateAllCurves,
           ),
         ],
         body: CurvesListView(
@@ -127,7 +127,7 @@ class CurvesListView extends ConsumerWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         // calculate scroll offset so that the selected curve is vertically centered when the page is first loaded
-        final selectedCurveKey = ref.watch(curveKeyProvider);
+        final selectedCurveKey = ref.watch(curveKeyProvider.state);
         final selectedCurveIndex =
             _allCurves.keys.toList().indexOf(selectedCurveKey.state);
         final availableHeight = constraints.maxHeight;
@@ -146,7 +146,7 @@ class CurvesListView extends ConsumerWidget {
                   animateAllCurves || curveKey == selectedCurveKey.state,
               isSelected: curveKey == selectedCurveKey.state,
               animation: animation,
-              onSelected: () => ref.read(curveKeyProvider).state = curveKey,
+              onSelected: () => ref.read(curveKeyProvider.state).state = curveKey,
             );
           },
           separatorBuilder: (context, index) => Container(

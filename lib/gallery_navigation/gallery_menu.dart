@@ -56,7 +56,7 @@ final selectedPageKeyProvider = StateProvider<String>((ref) {
 });
 
 final selectedPageBuilderProvider = Provider<WidgetBuilder>((ref) {
-  final selectedPageKey = ref.watch(selectedPageKeyProvider).state;
+  final selectedPageKey = ref.watch(selectedPageKeyProvider.state).state;
   return availablePages[selectedPageKey]!;
 });
 
@@ -64,8 +64,8 @@ class GalleryMenu extends ConsumerWidget {
   GalleryMenu({Key? key}) : super(key: key);
 
   void _selectPage(BuildContext context, WidgetRef ref, String pageName) {
-    if (ref.read(selectedPageKeyProvider).state != pageName) {
-      ref.read(selectedPageKeyProvider).state = pageName;
+    if (ref.read(selectedPageKeyProvider.state).state != pageName) {
+      ref.read(selectedPageKeyProvider.state).state = pageName;
       // dismiss drawer if we have one
       if (Scaffold.maybeOf(context)?.hasDrawer ?? false) {
         Navigator.of(context).pop();
@@ -75,7 +75,7 @@ class GalleryMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedPage = ref.watch(selectedPageKeyProvider);
+    final selectedPage = ref.watch(selectedPageKeyProvider.state);
     final selectedPageName = selectedPage.state;
     return PageScaffold(
       title: 'Gallery',
